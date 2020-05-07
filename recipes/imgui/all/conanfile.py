@@ -16,11 +16,13 @@ class IMGUIConan(ConanFile):
     settings = "os", "arch", "compiler", "build_type"
     options = {
         "shared": [True, False],
-         "fPIC": [True, False]
+        "fPIC": [True, False],
+        "build_executable": [True, False],
     }
     default_options = {
         "shared": False, 
-        "fPIC": True
+        "fPIC": True,
+        "build_executable": True
     }
 
     _cmake = None

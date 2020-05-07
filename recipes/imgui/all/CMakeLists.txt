@@ -19,9 +19,11 @@ if (MSVC)
     file(GLOB EXTRA_NATVIS_FILES ${MISC_DIR}/natvis/*.natvis)
 endif()
 
-set(BINARY_TO_COMPRESSED_BIN binary_to_compressed_c)
+if (build_executable)
+    set(BINARY_TO_COMPRESSED_BIN binary_to_compressed_c)
 
-add_executable(${BINARY_TO_COMPRESSED_BIN} ${EXTRA_FONTS_DIR}/binary_to_compressed_c.cpp)
+    add_executable(${BINARY_TO_COMPRESSED_BIN} ${EXTRA_FONTS_DIR}/binary_to_compressed_c.cpp)
+endif()
 
 add_library(${PROJECT_NAME} ${SOURCE_FILES})
 target_include_directories(${PROJECT_NAME} PRIVATE ${SOURCE_DIR})
@@ -33,8 +35,10 @@ install(TARGETS ${PROJECT_NAME}
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-install(TARGETS ${BINARY_TO_COMPRESSED_BIN}
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+if (build_executable)
+    install(TARGETS ${BINARY_TO_COMPRESSED_BIN}
+            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+endif()
 install(FILES ${HEADER_FILES}
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
         PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ WORLD_READ)
